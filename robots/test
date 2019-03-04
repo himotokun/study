@@ -1,0 +1,2 @@
+print("My id:", my_id);
+print("$:", money(my_id));

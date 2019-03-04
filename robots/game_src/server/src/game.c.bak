@@ -1,0 +1,123 @@
+#include <stdio.h>
+
+#include "strlib.h"
+
+#include "game.h"
+
+struct lst{
+	int key;
+	struct lst *next;
+};
+
+struct turn_s{
+	int s_prc,
+		s_qty,
+		b_prc,
+		b_qty,
+		prod_qty,
+		build_qty;
+};
+
+/* Testing dummy */
+
+enum{ buffer_size = 128 };
+
+struct player
+{
+	int raw;
+	int prod;
+	int fact;
+	int money;
+
+	int *fact_st;
+};
+
+#if 0
+char *play(int id, const char *name, const char *cmd)
+{
+	char buffer[buffer_size];
+	if(!str_cmp(cmd,"get")){
+		sprintf(buffer, "value is %d\n", global);
+		return str_unconst(buffer);
+	}else if(str_beg(cmd,"set")){
+		sscanf(cmd, "set %d", &global);
+		sprintf(buffer, "new value is %d\n", global);
+		return str_unconst(buffer);
+	}else{
+		return str_unconst("wrong command\n");
+	}
+}
+
+char *admin(const char *cmd)
+{
+	char buffer[buffer_size];
+	if(!str_cmp(cmd,"get")){
+		sprintf(buffer, "value is %d\n", global);
+		return str_unconst(buffer);
+	}else if(str_beg(cmd,"set")){
+		sscanf(cmd, "set %d", &global);
+		sprintf(buffer, "new value is %d\n", global);
+		return str_unconst(buffer);
+	}else{
+		return str_unconst("wrong command\n");
+	}
+}
+#endif
+
+/* Real game */
+
+static struct player* init_pls()
+{
+	struct player *res = malloc(sizeof(*res));
+	int i;
+	res->raw = 4;
+	res->fact = 2;
+	res->prod = 2;
+	res->money = 10000;
+	res->fact_st = malloc(res->fact*sizeof(int));
+	for(i = 0; i < res->fact; i++)
+		res->fact_st[i] = 0;
+	return res;
+}
+
+static struct player* init_plarr(int size)
+{
+	struct player *res = malloc(size*sizeof(*res));
+	int i;
+	for(i = 0; i < size; i++)
+		res[i] = init_pls();
+	return res;
+}
+
+/* Interfaces */
+
+int _play(int id, const char *cmd, char **response)
+{
+	if(!str_cmp(cmd,"info")){
+		*response = get_info();
+		return PLAY_DLG;
+	}else if(!str_cmp(cmd,"end")){
+		end(id);
+	}else if(!str_cmp(cmd,"build")){
+		build(id);
+	}else if(!str_cmp(cmd,"prod")){
+		prod(id);
+	}else if(str_beg(cmd,"buy")){
+		int num;
+		sscanf(cmd, "buy %d", &num);
+		buy(id, num);
+	}else if(str_beg(cmd,"sell")){
+		int num;
+		sscanf(cmd, "sell %d", &num);
+		sell(id, num);
+	}else{
+		*response = str_unconst("Wrong command!\n");
+		return PLAY_ERR;
+	}
+	return 0;
+}
+
+int _admin(const char *cmd, char **response)
+{
+	return 0;
+}

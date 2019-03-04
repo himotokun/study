@@ -1,0 +1,13 @@
+int turn_ = 0;
+begin:
+	print("It's turn number", turn);
+	buy(2, raw_price);
+	sell(production(my_id), production_price);
+	int to_prod = 2;
+	if(raw(my_id) < to_prod){
+		to_prod = raw(my_id);
+	}
+	prod(to_prod);
+	endturn;
+	goto begin;
+
