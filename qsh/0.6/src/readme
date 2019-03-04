@@ -1,0 +1,19 @@
+Welcome to qsh readme file! Here is some information about it.
+
+At first, qsh consists of several modules:
+
+1. main.c - just one cycle, that processes the keys, prints the greet,
+	reads and runs the commands until get_clst() returns NULL what means EOF
+
+2. parser.c - at all, it gets the control at function get_clst which
+	reads some stuff and returns a command list with some misc data
+
+3. cmdlib.c - the main function is exec_clst2, which gets a command list
+	and runs it with their species
+
+4. interface.c - provides interaction with the user like greeting,
+	some confirmations, questions and error messages
+
+5. strlib.c - functions for operations with strings
+
+6. keylib.c - processes command line arguments like --help and others
