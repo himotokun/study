@@ -1,5 +1,5 @@
 # study
-My old study projects (just4lulz)
+My old study projects
 
 At the moment there are 3 projects:
 
